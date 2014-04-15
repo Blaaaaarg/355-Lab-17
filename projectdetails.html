@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Details</title>
+        <link rel="stylesheet" type="text/css" href="/lab16.css">
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                    url: "projectdetails/select"
+                    type: "POST",
+                    contentType: "application/json",
+                    processData: false,
+                    complete: function (data) {
+                        $('div#prj').html(data.responseText);
+                    }
+               });
+        // Retrieve data from MySQL for a specific user 
+              $('#proj-submit').click(function () { 
+                         var payload = { 
+                              id: $('#proj-list').val(), // prob broken here
+                           }; 
+                             
+                            $.ajax({ 
+                                url: "/projectdetails", 
+                                type: "POST", 
+                                contentType: "application/json", 
+                                processData: false, 
+                                data: JSON.stringify(payload), 
+                                complete: function (data) { 
+                                    $('#output').html(data.responseText);  // prob broken here
+                              } 
+                           });
+                      });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="header">
+            Details
+        </div>
+        <div id="menu">
+            <a id="menulink" href="/">Home</a>
+            <a id="menulink" href="/login/">Sign In</a>
+            <a id="menulink" href="/projects/">Projects</a>
+            <a id="menulink" href="/teams/">Teams</a>
+            <a id="menulink" href="/settings/">Settings</a>
+            <a id="menulink" href="/help">Help/About</a>
+        </div>
+        <div id="content">
+            <h2>Select a project to get its information</h2>
+            <div id="prj"></div>
+            <input id="user-submit" type="submit" />
+            <p id="output"></p>
+        </div>
+        <div id="footer">
+            Updated 4/14/2014
+        </div>
+    </body>
+</html>
